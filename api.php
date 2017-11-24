@@ -2,12 +2,18 @@
 
 require_once 'config.php';
 require_once 'libs/global.lib.php';
+require_once 'libs/translate.lib.php';
 require_once 'api/api_all.php';
 require_once 'api/api_functions.php';
 
 $input = array_merge($_POST, $_GET);
 
 header("Content-Type: application/json; charset=utf-8");
+
+$lang = (string)$input['lang'];
+if (!$lang) {
+  $lang = 'en';
+}
 
 $method = (string)$input['method'];
 $access_token = (string)$input['access_token'];

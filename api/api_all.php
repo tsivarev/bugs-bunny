@@ -8,24 +8,14 @@ function api_auth_startSession() {
   );
 }
 
-function api_auth_signUp() {
-  global $input;
-
-  $first_name = (string)$input['first_name'];
-  $last_name = (string)$input['last_name'];
-  $phone = (string)$input['phone'];
-  $email = (string)$input['email'];
-  $password = (string)$input['password'];
-}
-
 function api_cards_get() {
-  global $input, $session_id;
+  global $lang, $session_id;
 
   $items = array();
   $items[] = array(
     'id'        => 1,
     'image_url' => 'test.png',
-    'text'      => 'test',
+    'text'      => translate_query($lang, 'test')
   );
 
   return api_wrapList($items, count($items));
@@ -59,7 +49,6 @@ function api_jobs_apply() {
 
   return OK_RESPONSE;
 }
-
 
 function api_jobs_ignore() {
   global $input, $session_id;
