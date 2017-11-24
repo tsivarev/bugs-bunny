@@ -35,7 +35,7 @@ function api_error($message, $code = 400) {
     )));
 }
 
-function api_getSessionUniqueId($session) {
+function api_getSession($session) {
   global $MC;
 
   $unique_id = base64_decode($session);
@@ -43,11 +43,21 @@ function api_getSessionUniqueId($session) {
   return $MC->get('session' . $unique_id);
 }
 
-function api_generateSession() {
+function api_generateAccessToken() {
   global $MC;
 
   $unique_id = uniqid();
-  $MC->set('session' . $unique_id, array('time' => time()));
+  $MC->set('session' . $unique_id, array(
+    'session_id' => $unique_id,
+    'time'       => time(),
+  ));
 
   return base64_encode($unique_id);
+}
+
+function api_wrapList($items, $count) {
+  return array(
+    'count' => $count,
+    'items' => $items,
+  );
 }
