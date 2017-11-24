@@ -34,3 +34,20 @@ function api_error($message, $code = 400) {
       'message' => $message
     )));
 }
+
+function api_getSessionUniqueId($session) {
+  global $MC;
+
+  $unique_id = base64_decode($session);
+
+  return $MC->get('session' . $unique_id);
+}
+
+function api_generateSession() {
+  global $MC;
+
+  $unique_id = uniqid();
+  $MC->set('session' . $unique_id, array('time' => time()));
+
+  return base64_encode($unique_id);
+}

@@ -1,9 +1,13 @@
 <?php
 
 function api_auth_startSession() {
-  global $input;
+  return array(
+    'session' => api_generateSession()
+  );
+}
 
-  $lang = (string)$input['lang'];
+function api_auth_check() {
+  global $temp_session;
 
-  return base64_encode($lang);
+  return $temp_session;
 }

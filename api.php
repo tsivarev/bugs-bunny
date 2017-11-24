@@ -10,7 +10,8 @@ $input = array_merge($_POST, $_GET);
 header("Content-Type: application/json; charset=utf-8");
 
 $method = (string)$input['method'];
-$session_id = (string)$input['session_id'];
+$session = (string)$input['session'];
+$temp_session = $session ? api_getSessionUniqueId($session) : null;
 $access_token = (string)$input['access_token'];
 
 try {
