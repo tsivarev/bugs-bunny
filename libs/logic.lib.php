@@ -61,6 +61,8 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     return $v >= 0;
   });
 
+  log_msg($category_ids);
+
   $result = db_query('SELECT * from JOBS_CATEGORIES where CATEGORY_ID IN ('.implode(',', array_keys($category_ids)).')');
 
   $job_category_ids = array();
