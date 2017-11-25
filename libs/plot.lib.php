@@ -41,7 +41,11 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
     if ($answer_info) {
       if ($answer_info[PLOT_SKILLS]) {
         foreach ($answer_info[PLOT_SKILLS] as $skill => $change) {
-          $skills[$skill] += $change;
+          if (!isset($skills[$skill])) {
+            $skills[$skill] = $change;
+          } else {
+            $skills[$skill] += $change;
+          }
         }
       }
       if (isset($answer_info[PLOT_CATEGORY])) {
@@ -60,7 +64,11 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
 
     $wordCats = $word2categories[$word];
     foreach ($wordCats as $cat_id => $weight) {
-      $categories[$cat_id] += $weight;
+      if (!isset($categories[$cat_id])) {
+        $categories[$cat_id] = $weight;
+      } else {
+        $categories[$cat_id] += $weight;
+      }
     }
   }
 
@@ -242,9 +250,19 @@ function suggestWord($step, $categories, $used_words) {
   }
 
   foreach ($categories as $category_id => $weight) {
-    foreach ($category2words[$category_id] as $word) {
-      if (isset($used_words[$word])) continue;
-      $result[$word] += $weight;
+    if (isset($category2words[$category_id])) {
+      if (!is_array($category2words[$category_id])) {
+        log_error($category_id);
+      }
+
+      foreach ($category2words[$category_id] as $word) {
+        if (isset($used_words[$word])) {
+          continue;
+        }
+        $result[$word] += $weight;
+      }
+    } else {
+      log_error($category_id);
     }
   }
 
