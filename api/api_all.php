@@ -11,34 +11,26 @@ function api_auth_startSession() {
 function api_cards_get() {
   global $lang, $session_id;
 
-  $items = array();
-  $items[] = array(
-    'id'        => 1,
-    'image_url' => 'test.png',
-    'text'      => translate_query($lang, 'test')
-  );
+  $items = logic_getCards($session_id, $lang);
 
   return api_wrapList($items, count($items));
 }
 
-function api_cards_sendEvents() {
+function api_cards_apply() {
   global $input, $session_id;
 
   $events = (array)$input['events'];
 
-  return OK_RESPONSE;
+  $items = logic_getJobs($session_id);
+  return api_wrapList($items, count($items));
 }
 
-function api_jobs_get() {
+function api_cards_ignore() {
   global $input, $session_id;
 
-  $items = array();
-  $items[] = array(
-    'id'          => 1,
-    'title'       => 'driver',
-    'description' => 'test',
-  );
+  $events = (array)$input['events'];
 
+  $items = logic_getJobs($session_id);
   return api_wrapList($items, count($items));
 }
 

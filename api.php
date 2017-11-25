@@ -3,6 +3,7 @@
 require_once 'config.php';
 require_once 'libs/global.lib.php';
 require_once 'libs/translate.lib.php';
+require_once 'libs/logic.lib.php';
 require_once 'api/api_all.php';
 require_once 'api/api_functions.php';
 
