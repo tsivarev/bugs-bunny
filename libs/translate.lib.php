@@ -31,6 +31,9 @@ function _translate_request($target, $text, $source = 'en') {
 
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0');
+  curl_setopt($ch, CURLOPT_ENCODING , '');
+
   $server_output = curl_exec($ch);
   curl_close($ch);
 
