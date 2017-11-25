@@ -1,5 +1,11 @@
 <?php
 
+function logic_dropSession($session_id) {
+  global $MC;
+
+  $MC->delete('info' . $session_id);
+}
+
 function logic_getNextCards($session_id, $lang, $current_answer) {
   global $MC;
 
