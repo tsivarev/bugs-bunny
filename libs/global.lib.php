@@ -89,7 +89,12 @@ function _db_loadCategories() {
   $result = array();
   $count = 0;
   foreach ($jobs as $category_id => $category_jobs) {
-    if (!isset($category2skill[$category_id])) {
+    $selected_category_id = $category_id;
+    while ($selected_category_id && !isset($category2skill[$selected_category_id])) {
+      $selected_category_id = (int)substr($selected_category_id, 0, strlen($selected_category_id) - 1);
+    }
+
+    if (!$selected_category_id) {
       continue;
     }
 
@@ -106,8 +111,8 @@ function _db_loadCategories() {
     foreach ($jobs_ids as $job_id) {
       $db_result = db_query("INSERT INTO JOBS_CATEGORIES (job_id, category_id) VALUES ({$job_id}, {$category_id})");
       if ($db_result !== true) {
-        log_error("fail");
-        exit;
+//        log_error("fail");
+//        exit;
       }
     }
   }

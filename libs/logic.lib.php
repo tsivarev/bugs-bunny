@@ -137,6 +137,11 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
       $distance = '';
     }
 
+//    $job_categories = '';
+//    if (isset($json['ammattikoodi'])) {
+//      $job_category_ids = $json['ammattikoodi'];
+//    }
+
     $jobs[] = array(
       'id'        => $json['ilmoitusnumero'],
       'title'     => translate_query($lang, $json['tehtavanimi'], 'fi'),
