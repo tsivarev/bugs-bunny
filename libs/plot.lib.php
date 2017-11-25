@@ -153,7 +153,7 @@ function getPlot() {
   return array(
     1 => array(
       PLOT_TEXT => 'Ymmärrän, mitä kirjoitetaan täällä',
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_LOW_SPEAKING => 1)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_LOW_SPEAKING => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2)),
       PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses')
     ),
@@ -165,7 +165,7 @@ function getPlot() {
     ),
     3 => array(
       PLOT_TEXT => 'Puhun hyvin suomeksi',
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 1)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 0.2)),
       PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0)),
       PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses')
     ),
