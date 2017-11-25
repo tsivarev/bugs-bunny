@@ -31,13 +31,9 @@ function logic_getNextCards($session_id, $lang, $current_answer) {
       $plot = getPlot();
       $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
     }
-
-    if (!empty($result)) {
-      return $result;
-    }
   }
 
-  return null;
+  return array($result, $skills, $categories);
 }
 
 function logic_wrapCard($step, $card, $lang) {
@@ -53,8 +49,39 @@ function logic_wrapCard($step, $card, $lang) {
   );
 }
 
-function logic_getJobs($session_id) {
-  $result = db_query('SELECT * from JOBS limit 0, 10;');
+function logic_getJobs($session_id, $lang, $skills, $categories) {
+  $weights = weightCategories($skills, $categories);
+  $category_ids = array();
+  foreach ($weights as $category_id => $value) {
+    if ($value <= 0) {
+      continue;
+    }
+
+    $category_ids[$category_id] = $value;
+  }
+
+  $result = db_query('SELECT * from JOBS_CATEGORIES where CATEGORY_ID IN ('.implode(',', array_keys($category_ids)).')');
+  $job_category_ids = array();
+  while ($row = mysqli_fetch_assoc($result)) {
+    if (!$job_category_ids[$row['category_id']]) {
+      $job_category_ids[$row['category_id']] = array();
+    }
+
+    $job_category_ids[$row['category_id']][] = $row['job_id'];
+  }
+
+  $job_ids = array();
+  foreach ($category_ids as $category_id => $value) {
+    $found = array_slice($job_category_ids[$category_id], 0, 3);
+    foreach ($found as $job_id) {
+      $job_ids[$job_id] = 1;
+    }
+  }
+
+  $job_ids = array_keys($job_ids);
+  log_msg($job_ids);
+
+  $result = db_query('SELECT * from JOBS where ID IN ('.implode(',', $job_ids).')');
   $jobs = array();
   while ($row = mysqli_fetch_assoc($result)) {
     $json = json_decode($row['json'], true);
@@ -64,9 +91,11 @@ function logic_getJobs($session_id) {
       'title'     => $json['tehtavanimi'],
       'salary'    => $json['palkkausteksti'] ?: "unknown",
       'address'   => $json['yhteystiedot'],
-      'work_time' => $json['tyoaikatekstiYhdistetty'],
+      'work_time' => translate_query($lang, $json['tyoaikatekstiYhdistetty'], 'fi'),
     );
   }
 
+
   return $jobs;
 }
+

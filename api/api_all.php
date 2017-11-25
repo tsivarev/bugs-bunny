@@ -11,7 +11,7 @@ function api_auth_startSession() {
 function api_cards_get() {
   global $lang, $session_id;
 
-  $cards = logic_getNextCards($session_id, $lang, PLOT_YES);
+  list($cards) = logic_getNextCards($session_id, $lang, PLOT_YES);
 
   return api_wrapList($cards, count($cards));
 }
@@ -21,8 +21,8 @@ function api_cards_mark() {
 
   $card_id = (int)$input['card_id'];
   $answer = (bool)$input['answer'];
-  $cards = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO);
-  $jobs = logic_getJobs($session_id);
+  list($cards, $skills, $categories) = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO);
+  $jobs = logic_getJobs($session_id, $lang, $skills, $categories);
 
   return array(
     'cards' => api_wrapList($cards, count($cards)),

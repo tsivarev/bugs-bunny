@@ -8,9 +8,6 @@ require_once 'api/api_all.php';
 require_once 'api/api_functions.php';
 
 
-_db_loadCategories();
-
-
 //_db_init();
 //_db_loadJobs();
 
