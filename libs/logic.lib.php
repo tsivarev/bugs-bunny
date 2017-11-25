@@ -89,7 +89,7 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     }
   }
 
-  $job_ids = array_keys($job_ids);
+  $job_ids = array_slice(array_keys($job_ids),0, 100);
 
   $result = db_query('SELECT * from JOBS where ID IN ('.implode(',', $job_ids).')');
   $jobs = array();
