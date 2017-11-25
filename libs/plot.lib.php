@@ -210,9 +210,15 @@ function getPlot() {
 function suggestWord($step, $categories, $used_words) {
   global $category2words, $words;
 
-  if ($step > 0 && $step < 5) return null;
+  if ($step > 0 && $step < 5) {
+    log_msg('skip words bcz of step');
+    return null;
+  }
 
-  if ($step != -1 && mt_rand(0, 1) == 1) return null;
+  if ($step != -1 && mt_rand(0, 1) == 1) {
+    log_msg('skip words bcz of random');
+    return null;
+  }
 
   $result = array();
 
@@ -235,6 +241,8 @@ function suggestWord($step, $categories, $used_words) {
   });
 
   $shuffled = weightedShuffle($positive);
+
+  log_msg('count words ' . count($positive) . ' and count shuffled ' . count($shuffled));
 
   $index = mt_rand(0, 10);
   $keys = array_keys($shuffled);
