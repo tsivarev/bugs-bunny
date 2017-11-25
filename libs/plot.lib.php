@@ -99,41 +99,41 @@ function findNextStep($step, $skills) {
 function getPlot() {
   return array(
     1 => array(
-      PLOT_TEXT => 'Ymmärrätkö, mitä kirjoitetaan?',
+      PLOT_TEXT => 'Ymmärrän, mitä kirjoitetaan täällä',
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_LOW_SPEAKING => 1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2))
     ),
     2 => array(
-      PLOT_TEXT => 'Puhutko sujuvasti suomea?',
+      PLOT_TEXT => 'Puhun hyvin suomeksi',
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 1)),
       PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0))
     ),
     3 => array(
-      PLOT_TEXT => 'Do you have higher degree?',
+      PLOT_TEXT => 'I have higher degree',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_EDUCATION => 1, SKILL_TECHNICAL => 0.2, SKILL_LOW => -1, SKILL_INTELLIGENCE => 1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_EDUCATION => -0.3, SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.2)),
     ),
     4 => array(
-      PLOT_TEXT => 'Do you know math?',
+      PLOT_TEXT => 'I know math',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.3, SKILL_INTELLIGENCE => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.3, SKILL_INTELLIGENCE => -0.4)),
     ),
     5 => array(
-      PLOT_TEXT => 'Do you know how to use computer?',
+      PLOT_TEXT => 'I know how to use computers',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.3, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
     ),
     6 => array(
-      PLOT_TEXT => 'Software developer?',
+      PLOT_TEXT => 'Software developer',
       PLOT_TRANSLATE => true,
       PLOT_IF => array(SKILL_EDUCATION => array(PLOT_BIGGER, 0), SKILL_TECHNICAL => array(PLOT_BIGGER, 0), SKILL_COMPUTER => array(PLOT_BIGGER, 0),),
       PLOT_YES => array(PLOT_CATEGORY => array(25 => 1))
     ),
     7 => array(
-      PLOT_TEXT => 'Work with hands?',
+      PLOT_TEXT => 'I like working with hands',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HANDS => 1, SKILL_INTELLIGENCE => -0.3)),
     ),
@@ -158,12 +158,12 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HELP => 1)),
     ),
     12 => array(
-      PLOT_TEXT => 'Do you know medicine?',
+      PLOT_TEXT => 'I know medicine',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.2)),
     ),
     13 => array(
-      PLOT_TEXT => 'Hygiene Passport',
+      PLOT_TEXT => 'I have Hygiene Passport',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH => 1)),
     ),
