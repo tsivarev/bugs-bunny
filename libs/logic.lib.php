@@ -152,8 +152,9 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     );
   }
 
-  $jobs = array_slice($jobs,0, 30);
-
+  if (count($jobs) > 50) {
+    $jobs = array_slice($jobs,0, rand(50, min(100, count($jobs))));
+  }
 
   return $jobs;
 }
