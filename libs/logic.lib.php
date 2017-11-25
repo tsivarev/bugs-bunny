@@ -96,6 +96,23 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
   while ($row = mysqli_fetch_assoc($result)) {
     $json = json_decode($row['json'], true);
 
+    if (!isset($json['tehtavanimi'])) {
+      continue;
+    }
+
+    if (!isset($json['palkkausteksti'])) {
+      continue;
+    }
+
+    if (!isset($json['yhteystiedot'])) {
+      continue;
+    }
+
+    if (!isset($json['tyoaikatekstiYhdistetty'])) {
+      continue;
+    }
+
+
     $jobs[] = array(
       'id'        => isset($json['ilmoitusnumero']) ? $json['ilmoitusnumero']: 'unknown',
       'title'     => isset($json['tehtavanimi']) ? $json['tehtavanimi'] : 'unknown',

@@ -16,9 +16,12 @@ function translate_query($target, $text, $source = 'en') {
   $output = _translate_request($target, $text, $source);
   $translation = $output[0][0][0];
 
-  $MC->set($mc_key, $translation);
+  if ($translation) {
+    $MC->set($mc_key, $translation);
+    return $translation;
+  }
 
-  return $translation;
+  return $text;
 }
 
 function _translate_request($target, $text, $source = 'en') {
@@ -30,6 +33,10 @@ function _translate_request($target, $text, $source = 'en') {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $server_output = curl_exec($ch);
   curl_close($ch);
+
+  log_msg($text);
+  log_msg($url);
+  log_msg($server_output);
 
   return json_decode($server_output, true);
 }
