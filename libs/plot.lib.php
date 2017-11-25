@@ -57,18 +57,18 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
           }
         }
       }
-      if ($answer == PLOT_NO) {
-        if (isset($answer_info[PLOT_COURSES])) {
-          log_msg('ADD COURSE');
-          $dont_add = false;
-          foreach ($courses as $cours) {
-            if ($cours[PLOT_NAME] === $answer_info[PLOT_COURSES][PLOT_NAME]) {
-              $dont_add = true;
-            }
+    }
+    if ($answer == PLOT_NO) {
+      if (isset($step_info[PLOT_COURSES])) {
+        log_msg('ADD COURSE');
+        $dont_add = false;
+        foreach ($courses as $cours) {
+          if ($cours[PLOT_NAME] === $step_info[PLOT_COURSES][PLOT_NAME]) {
+            $dont_add = true;
           }
-          if (!$dont_add) {
-            $courses[] = $answer_info[PLOT_COURSES];
-          }
+        }
+        if (!$dont_add) {
+          $courses[] = $step_info[PLOT_COURSES];
         }
       }
     }
