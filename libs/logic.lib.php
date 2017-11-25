@@ -114,10 +114,10 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
 
 
     $jobs[] = array(
-      'id'        => isset($json['ilmoitusnumero']) ? $json['ilmoitusnumero']: 'unknown',
-      'title'     => isset($json['tehtavanimi']) ? $json['tehtavanimi'] : 'unknown',
-      'salary'    => isset($json['palkkausteksti']) ? $json['palkkausteksti'] : 'unknown',
-      'address'   => isset($json['yhteystiedot']) ? $json['yhteystiedot'] : 'unknown',
+      'id'        => $json['ilmoitusnumero'],
+      'title'     => translate_query($lang, $json['tehtavanimi'], 'fi'),
+      'salary'    => translate_query($lang, $json['palkkausteksti'], 'fi'),
+      'address'   => str_replace('\r\n', ' ', $json['yhteystiedot']),
       'work_time' => translate_query($lang, $json['tyoaikatekstiYhdistetty'], 'fi'),
     );
   }
