@@ -153,7 +153,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_MECHANICS => 1, SKILL_INTELLIGENCE => -0.2)),
     ),
     11 => array(
-      PLOT_TEXT => 'Trading',
+      PLOT_TEXT => 'To trade',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_SALES => 1)),
     ),
@@ -163,7 +163,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HELP => 1)),
     ),
     13 => array(
-      PLOT_TEXT => 'Cleaning',
+      PLOT_TEXT => 'To clean',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_CLEANING => 1.2)),
     ),
