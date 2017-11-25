@@ -134,19 +134,14 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     } else if (isset($json['postitoimipaikka'])){
       $distance = ucfirst($json['postitoimipaikka']);
     } else {
-      $distance = '';
+      $distance = 'Unknown';
     }
-
-//    $job_categories = '';
-//    if (isset($json['ammattikoodi'])) {
-//      $job_category_ids = $json['ammattikoodi'];
-//    }
 
     $jobs[] = array(
       'id'        => $json['ilmoitusnumero'],
       'title'     => translate_query($lang, $json['tehtavanimi'], 'fi'),
       'salary'    => translate_query($lang, $json['palkkausteksti'], 'fi'),
-      'address'   => str_replace('\r\n', ' ', $json['tyopaikanOsoite']),
+      'address'   => $json['tyopaikanOsoite'],
       'distance'  => $distance,
       'work_time' => translate_query($lang, $json['tyoaikatekstiYhdistetty'], 'fi'),
     );
