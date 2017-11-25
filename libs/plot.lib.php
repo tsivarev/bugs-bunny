@@ -144,7 +144,9 @@ function findNextStep($step, $skills, $categories, $used_words, $max_plot_id) {
     }
   }
 
-  $word = suggestWord($plot_step_id, $categories, $used_words);
+  $weighted_categories = weightCategories($skills, $categories);
+
+  $word = suggestWord($plot_step_id, $weighted_categories, $used_words);
 
   if ($word) {
     $word_id = $wordIndexes[$word];
@@ -263,7 +265,7 @@ function suggestWord($step, $categories, $used_words) {
 
   foreach ($words as $word) {
     if (isset($used_words[$word])) continue;
-    $result[$word] = 0;
+    $result[$word] = 0.1;
   }
 
   foreach ($categories as $category_id => $weight) {
@@ -291,7 +293,7 @@ function suggestWord($step, $categories, $used_words) {
     return $v >= 0;
   });
 
-  $shuffled = weightedShuffle($positive);
+  $shuffled = weightedShuffle($positive, 0.3);
 
   log_msg('count words ' . count($positive) . ' and count shuffled ' . count($shuffled));
 
