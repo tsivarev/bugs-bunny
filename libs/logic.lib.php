@@ -39,6 +39,7 @@ function logic_wrapCard($step, $card, $lang) {
   }
 
   return array(
+    'id' => $step,
     'text' => $text,
     'image_url' => '/static/card_' . $step . '.png'
   );
