@@ -136,7 +136,7 @@ function findNextStep($step, $skills, $categories, $used_words, $max_plot_id) {
 
         switch ($condition) {
           case PLOT_BIGGER:
-            if ($skill_value < $need_value) {
+            if ($skill_value <= $need_value) {
               $passed_if = false;
             }
             break;
