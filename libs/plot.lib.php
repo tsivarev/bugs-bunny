@@ -12,7 +12,7 @@ define('PLOT_IF', 'if');
 define('PLOT_BIGGER', '>');
 
 function startPlot() {
-  return moveByPlot(0, '', array(), array());
+  return moveByPlot(0, '', array(SKILL_HEALTH => -0.3), array());
 }
 
 function moveByPlot($step, $answer, $skills, $categories) {
