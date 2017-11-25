@@ -25,6 +25,7 @@ $session = $access_token ? api_getSession($access_token) : null;
 $session_id = null;
 if ($session) {
   $session_id = $session['session_id'];
+  log_msg('Session_id: '. $session_id);
 }
 
 if (!$session_id && $method != 'auth.startSession') {
