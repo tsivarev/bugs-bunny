@@ -86,9 +86,11 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     }
   }
 
+  arsort($job_ids);
   $job_ids = array_keys($job_ids);
+  log_msg(count($job_ids));
 
-  $result = db_query('SELECT * from JOBS where ID IN ('.implode(',', $job_ids).')');
+  $result = db_query('SELECT * from JOBS where ID IN ('.implode(',', array_keys($job_ids)).')');
   $jobs = array();
   while ($row = mysqli_fetch_assoc($result)) {
     $json = json_decode($row['json'], true);
@@ -139,7 +141,7 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
       $distance = 'Unknown';
     }
 
-    $jobs[] = array(
+    $jobs[$json['ilmoitusnumero']] = array(
       'id'        => $json['ilmoitusnumero'],
       'title'     => translate_query($lang, $json['tehtavanimi'], 'fi'),
       'salary'    => translate_query($lang, $json['palkkausteksti'], 'fi'),
@@ -149,11 +151,18 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     );
   }
 
-  if (count($jobs) > 50) {
-    $jobs = array_slice($jobs,0, rand(50, min(100, count($jobs))));
+  $result = array();
+  foreach ($job_ids as $job_id => $value) {
+    if (isset($jobs[$job_id])) {
+      $result[] = $jobs[$job_id];
+    }
   }
 
-  return $jobs;
+  if (count($result) > 50) {
+    $result = array_slice($result,0, rand(50, min(100, count($result))));
+  }
+
+  return $result;
 }
 
 function haversineGreatCircleDistance(

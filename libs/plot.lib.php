@@ -50,7 +50,11 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
       }
       if (isset($answer_info[PLOT_CATEGORY])) {
         foreach ($answer_info[PLOT_CATEGORY] as $category => $change) {
-          $categories[$category] += $change;
+          if (!isset($skills[$skill])) {
+            $categories[$category] = $change;
+          } else {
+            $categories[$category] += $change;
+          }
         }
       }
       if ($answer == PLOT_NO) {
