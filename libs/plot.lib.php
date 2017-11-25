@@ -17,7 +17,7 @@ function startPlot() {
   return array(
     1,
     $plot[1],
-    array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2),
+    array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2, SKILL_HEALTH => -0.1),
     array(),
     array()
   );
@@ -165,7 +165,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_CATEGORY => array(25 => 1))
     ),
     8 => array(
-      PLOT_TEXT => 'I like working with hands',
+      PLOT_TEXT => 'Ok with labour work',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HANDS => 1, SKILL_INTELLIGENCE => -0.3)),
     ),
@@ -185,7 +185,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_SALES => 1)),
     ),
     12 => array(
-      PLOT_TEXT => 'Help others',
+      PLOT_TEXT => 'Assisting people',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HELP => 1)),
     ),
@@ -200,7 +200,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.1)),
     ),
     15 => array(
-      PLOT_TEXT => 'I have Hygiene Passport',
+      PLOT_TEXT => 'Hygiene Passport holder',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH => 1)),
     ),
