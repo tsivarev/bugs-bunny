@@ -104,15 +104,15 @@ function getPlot() {
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2))
     ),
     2 => array(
-      PLOT_TEXT => 'Puhun hyvin suomeksi',
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 1)),
-      PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0))
-    ),
-    3 => array(
       PLOT_TEXT => 'I have higher degree',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_EDUCATION => 1, SKILL_TECHNICAL => 0.2, SKILL_LOW => -0.5, SKILL_INTELLIGENCE => 1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_EDUCATION => -0.3, SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.2)),
+    ),
+    3 => array(
+      PLOT_TEXT => 'Puhun hyvin suomeksi',
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 1)),
+      PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0))
     ),
     4 => array(
       PLOT_TEXT => 'I know math',
@@ -127,55 +127,55 @@ function getPlot() {
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
     ),
     6 => array(
+      PLOT_TEXT => 'Animals',
+      PLOT_TRANSLATE => true,
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_ANIMALS => 1)),
+    ),
+    7 => array(
       PLOT_TEXT => 'Software developer',
       PLOT_TRANSLATE => true,
       PLOT_IF => array(SKILL_EDUCATION => array(PLOT_BIGGER, 0), SKILL_TECHNICAL => array(PLOT_BIGGER, 0), SKILL_COMPUTER => array(PLOT_BIGGER, 0),),
       PLOT_YES => array(PLOT_CATEGORY => array(25 => 1))
     ),
-    7 => array(
+    8 => array(
       PLOT_TEXT => 'I like working with hands',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HANDS => 1, SKILL_INTELLIGENCE => -0.3)),
     ),
-    8 => array(
+    9 => array(
       PLOT_TEXT => 'Cars',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_CARS => 1, SKILL_INTELLIGENCE => -0.1)),
     ),
-    9 => array(
+    10 => array(
       PLOT_TEXT => 'Mechanisms',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_MECHANICS => 1, SKILL_INTELLIGENCE => -0.2)),
     ),
-    10 => array(
+    11 => array(
       PLOT_TEXT => 'Trade',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_SALES => 1)),
     ),
-    11 => array(
+    12 => array(
       PLOT_TEXT => 'Help others',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HELP => 1)),
     ),
-    12 => array(
+    13 => array(
       PLOT_TEXT => 'Cleaner',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_CLEANING => 1.2)),
     ),
-    13 => array(
+    14 => array(
       PLOT_TEXT => 'I know medicine',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.1)),
     ),
-    14 => array(
+    15 => array(
       PLOT_TEXT => 'I have Hygiene Passport',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH => 1)),
-    ),
-    15 => array(
-      PLOT_TEXT => 'Animals',
-      PLOT_TRANSLATE => true,
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_ANIMALS => 1)),
     ),
   );
 }

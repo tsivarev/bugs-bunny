@@ -1,6 +1,6 @@
 <?php
 
-function logic_getNextCard($session_id, $lang, $current_answer) {
+function logic_getNextCards($session_id, $lang, $current_answer) {
   global $MC;
 
   $step_value = $MC->get('info' . $session_id);
@@ -15,17 +15,33 @@ function logic_getNextCard($session_id, $lang, $current_answer) {
   $MC->set('info'.$session_id, array($step, $skills, $categories));
 
   if ($step > 0) {
-    $text = $step_info[PLOT_TEXT];
-    if ($step_info[PLOT_TRANSLATE]) {
-      $text = translate_query($lang, $text);
+    $result = array();
+    if ($step == 1) {
+      $result[] = logic_wrapCard($step, $step_info, $lang);
     }
-    return array(
-      'text' => $text,
-      'image_url' => '/static/card_' . $step . '.png'
-    );
+
+    $next_step = findNextStep($step, $skills);
+    if ($next_step > 0) {
+      $plot = getPlot();
+      $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
+    }
+
+    if (!empty($result)) return $result;
   }
 
   return null;
+}
+
+function logic_wrapCard($step, $card, $lang) {
+  $text = $card[PLOT_TEXT];
+  if ($card[PLOT_TRANSLATE]) {
+    $text = translate_query($lang, $text);
+  }
+
+  return array(
+    'text' => $text,
+    'image_url' => '/static/card_' . $step . '.png'
+  );
 }
 
 function logic_getCards($session_id, $lang) {
