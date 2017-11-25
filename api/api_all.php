@@ -21,7 +21,7 @@ function api_cards_mark() {
 
   $card_id = (string)$input['card_id'];
   $answer = (bool)$input['answer'];
-  list($cards, $skills, $categories) = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO, $card_id);
+  list($cards, $skills, $categories, $courses) = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO, $card_id);
   if (is_numeric($card_id) && $card_id > 6) {
     $jobs = $categories ? logic_getJobs($session_id, $lang, $skills, $categories) : array();
   } else {
@@ -29,6 +29,7 @@ function api_cards_mark() {
   }
 
   return array(
+    'courses' => api_wrapList($courses, count($courses)),
     'cards' => api_wrapList($cards, count($cards)),
     'jobs'  => api_wrapList($jobs, count($jobs))
   );
