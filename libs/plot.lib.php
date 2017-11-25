@@ -59,6 +59,7 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
       }
       if ($answer == PLOT_NO) {
         if (isset($answer_info[PLOT_COURSES])) {
+          log_msg('ADD COURSE');
           $dont_add = false;
           foreach ($courses as $cours) {
             if ($cours[PLOT_NAME] === $answer_info[PLOT_COURSES][PLOT_NAME]) {
