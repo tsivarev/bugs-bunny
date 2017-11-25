@@ -28,7 +28,7 @@ function startPlot() {
 }
 
 function acceptDecision($step, $answer, $skills, $categories, $courses) {
-  global $words, $word2categories;
+  global $words, $word2categories, $category2skill;
 
   $plot = getPlot();
 
@@ -63,11 +63,19 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
     $word = $words[$word_id];
 
     $wordCats = $word2categories[$word];
+    $selected_cats = array();
     foreach ($wordCats as $cat_id => $weight) {
-      if (!isset($categories[$cat_id])) {
-        $categories[$cat_id] = $weight;
-      } else {
-        $categories[$cat_id] += $weight;
+      $selected_cat = $cat_id;
+      while ($selected_cat && !isset($category2skill[$selected_cat])) {
+        $selected_cat = (int)substr($selected_cat, 0, strlen($selected_cat) - 1);
+      }
+      if ($selected_cat && !isset($selected_cats[$selected_cat])) {
+        $selected_cats[$selected_cat] = true;
+        if (!isset($categories[$selected_cat])) {
+          $categories[$selected_cat] = $weight;
+        } else {
+          $categories[$selected_cat] += $weight;
+        }
       }
     }
   }
