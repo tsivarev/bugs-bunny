@@ -4,6 +4,26 @@ function logic_getCards($session_id, $lang) {
   $items = array();
 
   $items[] = array(
+    'id'        => 6,
+    'text'      => 'wow',
+    'image_url' => 'https://pbs.twimg.com/profile_images/784791896405270530/CMKZpIpw.jpg'
+  );
+  $items[] = array(
+    'id'        => 6,
+    'text'      => 'wow',
+    'image_url' => 'https://pbs.twimg.com/profile_images/689152280818483200/17UIv0z8.png'
+  );
+  $items[] = array(
+    'id'        => 6,
+    'text'      => 'wow',
+    'image_url' => 'https://pbs.twimg.com/profile_images/880504880758005760/IWZAANG8.jpg'
+  );
+  $items[] = array(
+    'id'        => 6,
+    'text'      => 'wow',
+    'image_url' => 'https://pp.userapi.com/c639124/v639124562/5fb90/159RWfhK49w.jpg'
+  );
+  $items[] = array(
     'id'   => 1,
     'text' => 'driver'
   );

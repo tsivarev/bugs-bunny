@@ -25,8 +25,8 @@ function _log_write($message) {
 function _db_init() {
   db_query('drop table JOBS;');
   $q = "create table JOBS (
-          job_id int,
-          json BLOB,
+          id int NOT NULL PRIMARY KEY,
+          json BLOB
         );";
 
   db_query($q);
@@ -35,20 +35,38 @@ function _db_init() {
 function db_query($q) {
   global $DB;
 
-  return $DB->query($q) === true;
+  if ($DB->query($q) === true) {
+    return true;
+  } else {
+    $db_error = $DB->error;
+    log_error($q . ' -> ' .$db_error);
+  }
 }
 
 function _db_loadJobs() {
-  $file = file_get_contents('jobs_full_2.json');
-  $file = str_replace("}{", "}\n{", $file);
-  $chunks = str_split($file, "\n");
+  global $DB;
 
-  foreach ($chunks as $chunk) {
-    $jobs = json_decode($chunk, true);
-    foreach ($jobs as $job) {
-      $data = serialize($job);
-      db_query("INSERT INTO JOBS (job_id, json) VALUES ({$job['ilmoitusnumero']}, '{$data}')");
+  $handle = fopen('jobs_full_split.json', "r");
+  if ($handle) {
+    $count = 0;
+    while (($line = fgets($handle)) !== false) {
+      $jobs = json_decode($line, true);
+      $count += count($jobs);
+      foreach ($jobs as $job) {
+        $data = mysqli_escape_string($DB, json_encode($job));
+        $db_result = db_query("INSERT INTO JOBS (id, json) VALUES ({$job['ilmoitusnumero']}, '{$data}')");
+        if ($db_result !== true) {
+          log_error("fail");
+          exit;
+        }
+
+      }
     }
+
+    fclose($handle);
+  } else {
+    // error opening the file.
   }
 
+  echo $count;
 }
