@@ -20,7 +20,7 @@ function startPlot() {
   return array(
     1,
     $plot[1],
-    array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2, SKILL_HEALTH => -0.1),
+    array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2, SKILL_HEALTH_CARE => -0.1),
     array(),
     array(),
     array()
