@@ -7,7 +7,7 @@ function translate_query($target, $text, $source = 'en') {
     return $text;
   }
 
-  $mc_key = implode('_', array('translate', $target, $source, hash('sha256', $text)));
+  $mc_key = implode('_', array('translations', $target, $source, hash('sha256', $text)));
   $mc_result = $MC->get($mc_key);
   if ($mc_result) {
     return $mc_result;
