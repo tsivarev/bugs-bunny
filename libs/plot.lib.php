@@ -28,7 +28,7 @@ function startPlot() {
 }
 
 function acceptDecision($step, $answer, $skills, $categories, $courses) {
-  global $words, $word2categories, $category2skill;
+  global $words, $word2categories;
 
   $plot = getPlot();
 
@@ -65,10 +65,7 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
     $wordCats = $word2categories[$word];
     $selected_cats = array();
     foreach ($wordCats as $cat_id => $weight) {
-      $selected_cat = $cat_id;
-      while ($selected_cat && !isset($category2skill[$selected_cat])) {
-        $selected_cat = (int)substr($selected_cat, 0, strlen($selected_cat) - 1);
-      }
+      $selected_cat = findExistingCategoryId($cat_id);
       if ($selected_cat && !isset($selected_cats[$selected_cat])) {
         $selected_cats[$selected_cat] = true;
         if (!isset($categories[$selected_cat])) {
@@ -258,6 +255,8 @@ function suggestWord($step, $categories, $used_words) {
   }
 
   foreach ($categories as $category_id => $weight) {
+    $category_id = findExistingCategoryId($category_id);
+
     if (isset($category2words[$category_id])) {
       if (!is_array($category2words[$category_id])) {
         log_error($category_id);
@@ -287,4 +286,15 @@ function suggestWord($step, $categories, $used_words) {
   $index = mt_rand(0, 10);
   $keys = array_keys($shuffled);
   return $keys[$index];
+}
+
+function findExistingCategoryId($category_id) {
+  global $category2skill;
+
+  $selected_cat = $category_id;
+  while ($selected_cat && !isset($category2skill[$selected_cat])) {
+    $selected_cat = (int)substr($selected_cat, 0, strlen($selected_cat) - 1);
+  }
+
+  return $selected_cat;
 }
