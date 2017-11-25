@@ -67,9 +67,10 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
   }
 
   $result = db_query('SELECT * from JOBS_CATEGORIES where CATEGORY_ID IN ('.implode(',', array_keys($category_ids)).')');
+
   $job_category_ids = array();
   while ($row = mysqli_fetch_assoc($result)) {
-    if (!$job_category_ids[$row['category_id']]) {
+    if (!isset($job_category_ids[$row['category_id']])) {
       $job_category_ids[$row['category_id']] = array();
     }
 
@@ -78,6 +79,10 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
 
   $job_ids = array();
   foreach ($category_ids as $category_id => $value) {
+    if (!isset($job_category_ids[$category_id])) {
+      continue;
+    }
+
     $found = array_slice($job_category_ids[$category_id], 0, 3);
     foreach ($found as $job_id) {
       $job_ids[$job_id] = 1;
@@ -85,7 +90,6 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
   }
 
   $job_ids = array_keys($job_ids);
-  log_msg($job_ids);
 
   $result = db_query('SELECT * from JOBS where ID IN ('.implode(',', $job_ids).')');
   $jobs = array();
@@ -93,10 +97,10 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
     $json = json_decode($row['json'], true);
 
     $jobs[] = array(
-      'id'        => $json['ilmoitusnumero'],
-      'title'     => $json['tehtavanimi'],
-      'salary'    => $json['palkkausteksti'] ?: "unknown",
-      'address'   => $json['yhteystiedot'],
+      'id'        => isset($json['ilmoitusnumero']) ? $json['ilmoitusnumero']: 'unknown',
+      'title'     => isset($json['tehtavanimi']) ? $json['tehtavanimi'] : 'unknown',
+      'salary'    => isset($json['palkkausteksti']) ? $json['palkkausteksti'] : 'unknown',
+      'address'   => isset($json['yhteystiedot']) ? $json['yhteystiedot'] : 'unknown',
       'work_time' => translate_query($lang, $json['tyoaikatekstiYhdistetty'], 'fi'),
     );
   }

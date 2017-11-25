@@ -40,7 +40,7 @@ function acceptDecision($step, $answer, $skills, $categories) {
           $skills[$skill] += $change;
         }
       }
-      if ($answer_info[PLOT_CATEGORY]) {
+      if (isset($answer_info[PLOT_CATEGORY])) {
         foreach ($answer_info[PLOT_CATEGORY] as $category => $change) {
           $categories[$category] += $change;
         }
@@ -81,7 +81,7 @@ function findNextStep($step, $skills, $categories, $used_words, $max_plot_id) {
     $current_step = $max_plot_id + 1;
     while (isset($plot[$current_step])) {
       $step_info = $plot[$current_step];
-      if (!$step_info[PLOT_IF]) {
+      if (!isset($step_info[PLOT_IF])) {
         $plot_step_id = $current_step;
         break;
       }
