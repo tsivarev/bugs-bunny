@@ -14,12 +14,12 @@ function logic_getNextCards($session_id, $lang, $current_answer, $step) {
 
   $result = array();
   if (!$step_value) {
-    list($step, $step_info, $skills, $categories, $used_words) = startPlot();
+    list($step, $step_info, $skills, $categories, $used_words, $courses) = startPlot();
     $max_plot_id = 1;
     $result[] = logic_wrapCard($step, $step_info, $lang);
   } else {
-    list($skills, $categories, $used_words, $max_plot_id) = $step_value;
-    list($skills, $categories) = acceptDecision($step, $current_answer, $skills, $categories);
+    list($skills, $categories, $used_words, $max_plot_id, $courses) = $step_value;
+    list($skills, $categories, $courses) = acceptDecision($step, $current_answer, $skills, $categories, $courses);
   }
 
 
@@ -37,9 +37,9 @@ function logic_getNextCards($session_id, $lang, $current_answer, $step) {
     $max_plot_id = $next_step;
   }
 
-  $MC->set('info' . $session_id, array($skills, $categories, $used_words, $max_plot_id));
+  $MC->set('info' . $session_id, array($skills, $categories, $used_words, $max_plot_id, $courses));
 
-  return array($result, $skills, $categories);
+  return array($result, $skills, $categories, $courses);
 }
 
 function logic_wrapCard($step, $card, $lang) {

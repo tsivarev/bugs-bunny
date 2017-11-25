@@ -5,6 +5,9 @@ require_once 'config_skills.php';
 define('PLOT_TEXT', 'text');
 define('PLOT_YES', 'yes');
 define('PLOT_NO', 'no');
+define('PLOT_COURSES', 'courses');
+define('PLOT_LINK', 'link');
+define('PLOT_NAME', 'name');
 define('PLOT_SKILLS', 'skills');
 define('PLOT_CATEGORY', 'category');
 define('PLOT_TRANSLATE', 'translate');
@@ -19,11 +22,12 @@ function startPlot() {
     $plot[1],
     array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2, SKILL_HEALTH => -0.1),
     array(),
+    array(),
     array()
   );
 }
 
-function acceptDecision($step, $answer, $skills, $categories) {
+function acceptDecision($step, $answer, $skills, $categories, $courses) {
   global $words, $word2categories;
 
   $plot = getPlot();
@@ -45,6 +49,11 @@ function acceptDecision($step, $answer, $skills, $categories) {
           $categories[$category] += $change;
         }
       }
+      if ($answer == PLOT_NO) {
+        if (isset($answer_info[PLOT_COURSES])) {
+          $courses[] = $answer_info[PLOT_COURSES];
+        }
+      }
     }
   } else {
     $word = $words[$word_id];
@@ -58,6 +67,7 @@ function acceptDecision($step, $answer, $skills, $categories) {
   return array(
     $skills,
     $categories,
+    $courses
   );
 }
 
@@ -128,7 +138,8 @@ function getPlot() {
     1 => array(
       PLOT_TEXT => 'Ymmärrän, mitä kirjoitetaan täällä',
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_LOW_SPEAKING => 1)),
-      PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2))
+      PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2)),
+      PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses')
     ),
     2 => array(
       PLOT_TEXT => 'Higher degree',
@@ -139,19 +150,22 @@ function getPlot() {
     3 => array(
       PLOT_TEXT => 'Puhun hyvin suomeksi',
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => 1)),
-      PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0))
+      PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0)),
+      PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses')
     ),
     4 => array(
       PLOT_TEXT => 'Math',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.3, SKILL_INTELLIGENCE => -0.4)),
+      PLOT_COURSES => array(PLOT_LINK => 'http://www.eira.fi/fi/tule-opiskelemaan/enrol-to-high-school/', PLOT_NAME => 'Enrol High School')
     ),
     5 => array(
       PLOT_TEXT => 'Computers',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
+      PLOT_COURSES => array(PLOT_LINK => 'http://sto.digipap.eu/opinto-ohjelma/index.html#278', PLOT_NAME => 'ICT Courses')
     ),
     6 => array(
       PLOT_TEXT => 'Animals',
