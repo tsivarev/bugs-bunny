@@ -208,13 +208,18 @@ function getPlot() {
 }
 
 function suggestWord($step, $categories, $used_words) {
-  global $category2words;
+  global $category2words, $words;
 
   if ($step > 0 && $step < 5) return null;
 
   if ($step != -1 && mt_rand(0, 1) == 1) return null;
 
   $result = array();
+
+  foreach ($words as $word) {
+    if ($used_words[$word]) continue;
+    $result[$word] = 0;
+  }
 
   foreach ($categories as $category_id => $weight) {
     foreach ($category2words[$category_id] as $word) {
@@ -231,5 +236,7 @@ function suggestWord($step, $categories, $used_words) {
 
   $shuffled = weightedShuffle($positive);
 
-  return $shuffled[5];
+  $index = mt_rand(0, 10);
+  $keys = array_keys($shuffled);
+  return $keys[$index];
 }
