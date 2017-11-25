@@ -158,16 +158,21 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HELP => 1)),
     ),
     12 => array(
+      PLOT_TEXT => 'Cleaner',
+      PLOT_TRANSLATE => true,
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_CLEANING => 1.2)),
+    ),
+    13 => array(
       PLOT_TEXT => 'I know medicine',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.1)),
     ),
-    13 => array(
+    14 => array(
       PLOT_TEXT => 'I have Hygiene Passport',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH => 1)),
     ),
-    14 => array(
+    15 => array(
       PLOT_TEXT => 'Animals',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_ANIMALS => 1)),
