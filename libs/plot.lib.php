@@ -69,7 +69,7 @@ function parseStep($step) {
   return array(false, $step, $word_id);
 }
 
-function findNextStep($step, $skills, $categories, $used_words) {
+function findNextStep($step, $skills, $categories, $used_words, $max_plot_id) {
   global $wordIndexes;
 
   $plot = getPlot();
@@ -78,7 +78,7 @@ function findNextStep($step, $skills, $categories, $used_words) {
 
   $plot_step_id = -1;
   if ($plot_id > 0) {
-    $current_step = $plot_id + 1;
+    $current_step = $max_plot_id + 1;
     while (isset($plot[$current_step])) {
       $step_info = $plot[$current_step];
       if (!$step_info[PLOT_IF]) {

@@ -15,14 +15,15 @@ function logic_getNextCards($session_id, $lang, $current_answer, $step) {
   $result = array();
   if (!$step_value) {
     list($step, $step_info, $skills, $categories, $used_words) = startPlot();
+    $max_plot_id = 1;
     $result[] = logic_wrapCard($step, $step_info, $lang);
   } else {
-    list($skills, $categories, $used_words) = $step_value;
+    list($skills, $categories, $used_words, $max_plot_id) = $step_value;
     list($skills, $categories) = acceptDecision($step, $current_answer, $skills, $categories);
   }
 
 
-  list($next_step, $used_words, $word) = findNextStep($step, $skills, $categories, $used_words);
+  list($next_step, $used_words, $word) = findNextStep($step, $skills, $categories, $used_words, $max_plot_id);
 
   if ($word) {
     $text = translate_query($lang, $word, 'fi');
@@ -33,9 +34,10 @@ function logic_getNextCards($session_id, $lang, $current_answer, $step) {
     );
   } else {
     $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
+    $max_plot_id = $next_step;
   }
 
-  $MC->set('info' . $session_id, array($skills, $categories, $used_words));
+  $MC->set('info' . $session_id, array($skills, $categories, $used_words, $max_plot_id));
 
   return array($result, $skills, $categories);
 }
