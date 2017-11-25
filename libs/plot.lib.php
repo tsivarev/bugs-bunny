@@ -12,7 +12,7 @@ define('PLOT_IF', 'if');
 define('PLOT_BIGGER', '>');
 
 function startPlot() {
-  return moveByPlot(0, '', array(SKILL_HEALTH => -0.3), array());
+  return moveByPlot(0, '', array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2), array());
 }
 
 function moveByPlot($step, $answer, $skills, $categories) {
@@ -111,19 +111,19 @@ function getPlot() {
     3 => array(
       PLOT_TEXT => 'I have higher degree',
       PLOT_TRANSLATE => true,
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_EDUCATION => 1, SKILL_TECHNICAL => 0.2, SKILL_LOW => -1, SKILL_INTELLIGENCE => 1)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_EDUCATION => 1, SKILL_TECHNICAL => 0.2, SKILL_LOW => -0.5, SKILL_INTELLIGENCE => 1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_EDUCATION => -0.3, SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.2)),
     ),
     4 => array(
       PLOT_TEXT => 'I know math',
       PLOT_TRANSLATE => true,
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.3, SKILL_INTELLIGENCE => 0.3)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.3, SKILL_INTELLIGENCE => -0.4)),
     ),
     5 => array(
       PLOT_TEXT => 'I know how to use computers',
       PLOT_TRANSLATE => true,
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.3, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
     ),
     6 => array(
@@ -160,7 +160,7 @@ function getPlot() {
     12 => array(
       PLOT_TEXT => 'I know medicine',
       PLOT_TRANSLATE => true,
-      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.2)),
+      PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.1)),
     ),
     13 => array(
       PLOT_TEXT => 'I have Hygiene Passport',
