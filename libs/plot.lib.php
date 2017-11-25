@@ -247,6 +247,9 @@ function suggestWord($step, $categories, $used_words) {
     return null;
   }
 
+  mt_srand();
+  srand();
+
   if ($step != -1 && mt_rand(0, 1) == 1) {
     log_msg('skip words bcz of random');
     return null;
