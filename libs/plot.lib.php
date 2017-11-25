@@ -131,7 +131,7 @@ function getPlot() {
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2))
     ),
     2 => array(
-      PLOT_TEXT => 'I have higher degree',
+      PLOT_TEXT => 'Higher degree',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_EDUCATION => 1, SKILL_TECHNICAL => 0.2, SKILL_LOW => -0.5, SKILL_INTELLIGENCE => 1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_EDUCATION => -0.3, SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.2)),
@@ -142,13 +142,13 @@ function getPlot() {
       PLOT_IF => array(SKILL_LOW_SPEAKING => array(PLOT_BIGGER, 0))
     ),
     4 => array(
-      PLOT_TEXT => 'I know math',
+      PLOT_TEXT => 'Math',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.3, SKILL_INTELLIGENCE => -0.4)),
     ),
     5 => array(
-      PLOT_TEXT => 'I know how to use computers',
+      PLOT_TEXT => 'Computers',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
@@ -195,7 +195,7 @@ function getPlot() {
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_CLEANING => 1.2)),
     ),
     14 => array(
-      PLOT_TEXT => 'I know medicine',
+      PLOT_TEXT => 'Medicine',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_HEALTH_CARE => 1, SKILL_LOW => -0.1)),
     ),
