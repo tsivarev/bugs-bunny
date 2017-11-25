@@ -127,6 +127,8 @@ function findNextStep($step, $skills, $categories, $used_words, $max_plot_id) {
         break;
       }
 
+      log_msg('IF_PLOT: ' . print_r($skills, true));
+
       $if = $step_info[PLOT_IF];
       $passed_if = true;
 
