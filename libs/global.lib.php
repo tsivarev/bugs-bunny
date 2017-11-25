@@ -23,11 +23,18 @@ function _log_write($message) {
 }
 
 function _db_init() {
-  db_query('drop table JOBS;');
+  db_query('drop table JOBS; drop table JOBS_CATEGORIES;');
   $q = "create table JOBS (
           id int NOT NULL PRIMARY KEY,
           json BLOB
-        );";
+        );
+        
+        create table JOBS_CATEGORIES (
+          job_id int NOT NULL,
+          category_id int NOT NULL,
+          PRIMARY KEY (category_id, job_id)
+        );
+        ";
 
   db_query($q);
 }
@@ -70,4 +77,38 @@ function _db_loadJobs() {
   }
 
   echo $count;
+}
+
+function _db_loadCategories() {
+  require_once 'config_skills.php';
+  global $category2skill;
+
+  $jobs = json_decode(file_get_contents('jobs.json'), true);
+
+  $result = array();
+  $count = 0;
+  foreach ($jobs as $category_id => $category_jobs) {
+    if (!isset($category2skill[$category_id])) {
+      continue;
+    }
+
+    $count += count($category_jobs);
+    $jobs_ids = array();
+    foreach ($category_jobs as $job) {
+      $jobs_ids[$job['ilmoitusnumero']] = 1;
+    }
+
+    $result[$category_id] = array_keys($jobs_ids);
+  }
+
+  foreach ($result as $category_id => $jobs_ids) {
+    foreach ($jobs_ids as $job_id) {
+      $db_result = db_query("INSERT INTO JOBS_CATEGORIES (job_id, category_id) VALUES ({$job_id}, {$category_id})");
+      if ($db_result !== true) {
+        log_error("fail");
+        exit;
+      }
+    }
+  }
+
 }
