@@ -18,6 +18,7 @@ define('SKILL_EDUCATION',     15);
 define('SKILL_MECHANICS',     16);
 define('SKILL_LOW',           17);
 
+global $category2skill;
 $category2skill = array(
   2141 => array(SKILL_TECHNICAL, SKILL_EDUCATION, SKILL_LOW_SPEAKING, ),
   2142 => array(SKILL_TECHNICAL, SKILL_EDUCATION, SKILL_LOW_SPEAKING, ),
