@@ -57,7 +57,7 @@ function api_generateAccessToken() {
 
 function api_wrapList($items, $count) {
   return array(
-    'count' => $count,
-    'items' => $items,
+    'count' => (int)$count,
+    'items' => (array)$items,
   );
 }
