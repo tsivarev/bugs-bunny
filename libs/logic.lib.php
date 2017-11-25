@@ -12,7 +12,7 @@ function logic_getNextCards($session_id, $lang, $current_answer) {
     list($step, $step_info, $skills, $categories) = moveByPlot($step, $current_answer, $skills, $categories);
   }
 
-  $MC->set('info'.$session_id, array($step, $skills, $categories));
+  $MC->set('info' . $session_id, array($step, $skills, $categories));
 
   if ($step > 0) {
     $result = array();
@@ -26,7 +26,9 @@ function logic_getNextCards($session_id, $lang, $current_answer) {
       $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
     }
 
-    if (!empty($result)) return $result;
+    if (!empty($result)) {
+      return $result;
+    }
   }
 
   return null;
@@ -39,8 +41,8 @@ function logic_wrapCard($step, $card, $lang) {
   }
 
   return array(
-    'id' => $step,
-    'text' => $text,
+    'id'        => $step,
+    'text'      => ucfirst($text),
     'image_url' => '/static/card_' . $step . '.png'
   );
 }

@@ -11,27 +11,23 @@ function api_auth_startSession() {
 function api_cards_get() {
   global $lang, $session_id;
 
-  $items = logic_getCards($session_id, $lang);
+  $cards = logic_getNextCards($session_id, $lang, PLOT_YES);
 
-  return api_wrapList($items, count($items));
+  return api_wrapList($cards, count($cards));
 }
 
-function api_cards_apply() {
-  global $input, $session_id;
+function api_cards_mark() {
+  global $input, $session_id, $lang;
 
-  $events = (array)$input['events'];
+  $card_id = (int)$input['card_id'];
+  $answer = (bool)$input['answer'];
+  $cards = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO);
+  $jobs = logic_getJobs($session_id);
 
-  $items = logic_getJobs($session_id);
-  return api_wrapList($items, count($items));
-}
-
-function api_cards_ignore() {
-  global $input, $session_id;
-
-  $events = (array)$input['events'];
-
-  $items = logic_getJobs($session_id);
-  return api_wrapList($items, count($items));
+  return array(
+    'cards' => api_wrapList($cards, count($cards)),
+    'jobs'  => api_wrapList($jobs, count($jobs))
+  );
 }
 
 function api_jobs_apply() {
