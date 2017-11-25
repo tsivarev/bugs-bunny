@@ -35,8 +35,9 @@ function _db_init() {
 function db_query($q) {
   global $DB;
 
-  if ($DB->query($q) === true) {
-    return true;
+  $result = mysqli_query($DB, $q);
+  if ($result) {
+    return $result;
   } else {
     $db_error = $DB->error;
     log_error($q . ' -> ' .$db_error);

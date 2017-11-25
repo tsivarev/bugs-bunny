@@ -59,60 +59,19 @@ function logic_getCards($session_id, $lang) {
 }
 
 function logic_getJobs($session_id) {
-  $items = array();
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
-  );
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
+  $result = db_query('SELECT * from JOBS limit 0, 10;');
+  $jobs = array();
+  while ($row = mysqli_fetch_assoc($result)) {
+    $json = json_decode($row['json'], true);
 
-  );
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
+    $jobs[] = array(
+      'id'        => $json['ilmoitusnumero'],
+      'title'     => $json['tehtavanimi'],
+      'salary'    => $json['palkkausteksti'] ?: "unknown",
+      'address'   => $json['yhteystiedot'],
+      'work_time' => $json['tyoaikatekstiYhdistetty'],
+    );
+  }
 
-  );
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
-
-  );
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
-
-  );
-  $items[] = array(
-    'id'        => 1,
-    'title'     => 'driver',
-    'salary'    => 'test',
-    'work_time' => '10 - 19',
-    'address'   => 'here',
-    'geo'       => array(60.40301441, 24.96705878),
-
-  );
-
-  return $items;
+  return $jobs;
 }
