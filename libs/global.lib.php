@@ -88,6 +88,7 @@ function _db_loadCategories() {
 
   $result = array();
   $count = 0;
+  $c = 0;
   foreach ($jobs as $category_id => $category_jobs) {
     $selected_category_id = $category_id;
     while ($selected_category_id && !isset($category2skill[$selected_category_id])) {
@@ -104,7 +105,16 @@ function _db_loadCategories() {
       $jobs_ids[$job['ilmoitusnumero']] = 1;
     }
 
-    $result[$category_id] = array_keys($jobs_ids);
+    if ($selected_category_id == 25) {
+      $c++;
+    }
+
+    if (isset($result[$selected_category_id])) {
+      $result[$selected_category_id] = array_unique(array_merge($result[$selected_category_id], array_keys($jobs_ids)));
+    } else {
+      $result[$selected_category_id] = array_keys($jobs_ids);
+    }
+
   }
 
   foreach ($result as $category_id => $jobs_ids) {
@@ -117,6 +127,7 @@ function _db_loadCategories() {
     }
   }
 
+  echo $c;
 }
 
 function weightedShuffle($obj_2_weights, $smooth_alpha = 0.05) {

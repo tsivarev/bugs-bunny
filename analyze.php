@@ -9,7 +9,7 @@ require_once 'api/api_functions.php';
 
 //var_dump(_translate_request('ru', '3-vuorotyö', 'fi'));
 //_db_init();
-//_db_loadCategories();
+_db_loadCategories();
 
 //
 //header("Content-Type: application/json");
