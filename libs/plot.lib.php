@@ -77,6 +77,9 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
     }
   }
 
+  log_msg('new skills: ' . print_r($skills, true));
+  log_msg('new cats: ' . print_r($categories, true));
+
   return array(
     $skills,
     $categories,
