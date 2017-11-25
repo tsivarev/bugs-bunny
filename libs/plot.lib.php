@@ -60,18 +60,20 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
       }
     }
   } else {
-    $word = $words[$word_id];
+    if ($answer == PLOT_YES) {
+      $word = $words[$word_id];
 
-    $wordCats = $word2categories[$word];
-    $selected_cats = array();
-    foreach ($wordCats as $cat_id => $weight) {
-      $selected_cat = findExistingCategoryId($cat_id);
-      if ($selected_cat && !isset($selected_cats[$selected_cat])) {
-        $selected_cats[$selected_cat] = true;
-        if (!isset($categories[$selected_cat])) {
-          $categories[$selected_cat] = $weight;
-        } else {
-          $categories[$selected_cat] += $weight;
+      $wordCats = $word2categories[$word];
+      $selected_cats = array();
+      foreach ($wordCats as $cat_id => $weight) {
+        $selected_cat = findExistingCategoryId($cat_id);
+        if ($selected_cat && !isset($selected_cats[$selected_cat])) {
+          $selected_cats[$selected_cat] = true;
+          if (!isset($categories[$selected_cat])) {
+            $categories[$selected_cat] = $weight;
+          } else {
+            $categories[$selected_cat] += $weight;
+          }
         }
       }
     }
