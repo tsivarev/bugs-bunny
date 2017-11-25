@@ -280,9 +280,20 @@ function suggestWord($step, $categories, $used_words) {
   }
 
   foreach ($categories as $category_id => $weight) {
-    $category_id = findExistingCategoryId($category_id);
+    $short_category_id = findExistingCategoryId($category_id);
 
-    if (isset($category2words[$category_id])) {
+    if (isset($category2words[$short_category_id])) {
+      if (!is_array($category2words[$short_category_id])) {
+        log_error($short_category_id);
+      }
+
+      foreach ($category2words[$short_category_id] as $word) {
+        if (isset($used_words[$word])) {
+          continue;
+        }
+        $result[$word] += $weight;
+      }
+    } else if (isset($category2words[$category_id])) {
       if (!is_array($category2words[$category_id])) {
         log_error($category_id);
       }
