@@ -7,8 +7,7 @@ require_once 'libs/logic.lib.php';
 require_once 'api/api_all.php';
 require_once 'api/api_functions.php';
 
-echo iconv('cp1251', 'UTF-8', 'j\u00e4rjest\u00f6jen');
-
+var_dump(_translate_request('ru', '3-vuorotyö', 'fi'));
 //_db_init();
 //_db_loadJobs();
 
