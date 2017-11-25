@@ -12,23 +12,27 @@ define('PLOT_IF', 'if');
 define('PLOT_BIGGER', '>');
 
 function startPlot() {
-  return moveByPlot(0, '', array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2), array());
-}
-
-function moveByPlot($step, $answer, $skills, $categories) {
   $plot = getPlot();
 
-  $step_info = $plot[$step];
-  if (!$step_info && !$step) {
-    return array(
-      1,
-      $plot[1],
-      $skills,
-      $categories
-    );
-  }
+  return array(
+    1,
+    $plot[1],
+    array(SKILL_HEALTH => -0.3, SKILL_LOW => 1, SKILL_CLEANING => -0.2),
+    array(),
+    array()
+  );
+}
 
-  if ($step_info) {
+function acceptDecision($step, $answer, $skills, $categories) {
+  global $words, $word2categories;
+
+  $plot = getPlot();
+
+  list($is_plot, $plot_id, $word_id) = parseStep($step);
+
+  if ($is_plot) {
+    $step_info = $plot[$plot_id];
+
     $answer_info = $step_info[$answer];
     if ($answer_info) {
       if ($answer_info[PLOT_SKILLS]) {
@@ -42,58 +46,81 @@ function moveByPlot($step, $answer, $skills, $categories) {
         }
       }
     }
+  } else {
+    $word = $words[$word_id];
 
-    $next_step = findNextStep($step, $skills);
-
-    if ($next_step > 0) {
-      return array(
-        $next_step,
-        $plot[$next_step],
-        $skills,
-        $categories
-      );
+    $wordCats = $word2categories[$word];
+    foreach ($wordCats as $cat_id => $weight) {
+      $categories[$cat_id] += $weight;
     }
   }
 
   return array(
-    -1,
-    null,
     $skills,
-    $categories
+    $categories,
   );
 }
 
-function findNextStep($step, $skills) {
+function parseStep($step) {
+  if (is_numeric($step)) {
+    return array(true, $step, null);
+  }
+  list($step, $word_id) = explode('_', $step);
+  return array(false, $step, $word_id);
+}
+
+function findNextStep($step, $skills, $categories, $used_words) {
+  global $wordIndexes;
+
   $plot = getPlot();
 
-  $current_step = $step + 1;
-  while (isset($plot[$current_step])) {
-    $step_info = $plot[$current_step];
-    if (!$step_info[PLOT_IF]) return $current_step;
+  list(, $plot_id) = parseStep($step);
 
-    $if = $step_info[PLOT_IF];
-    $passed_if = true;
-
-    foreach ($if as $skill => $skill_condition) {
-      $skill_value = $skills[$skill];
-
-      list($condition, $need_value) = $skill_condition;
-
-      switch ($condition) {
-        case PLOT_BIGGER:
-          if ($skill_value <= $need_value) {
-            $passed_if = false;
-          }
-          break;
-        default: //wtf!
+  $plot_step_id = -1;
+  if ($plot_id > 0) {
+    $current_step = $plot_id + 1;
+    while (isset($plot[$current_step])) {
+      $step_info = $plot[$current_step];
+      if (!$step_info[PLOT_IF]) {
+        $plot_step_id = $current_step;
+        break;
       }
-    }
 
-    if ($passed_if) return $current_step;
-    $current_step++;
+      $if = $step_info[PLOT_IF];
+      $passed_if = true;
+
+      foreach ($if as $skill => $skill_condition) {
+        $skill_value = $skills[$skill];
+
+        list($condition, $need_value) = $skill_condition;
+
+        switch ($condition) {
+          case PLOT_BIGGER:
+            if ($skill_value <= $need_value) {
+              $passed_if = false;
+            }
+            break;
+          default: //wtf!
+        }
+      }
+
+      if ($passed_if) {
+        $plot_step_id = $current_step;
+        break;
+      }
+      $current_step++;
+    }
   }
 
-  return -1;
+  $word = suggestWord($plot_step_id, $categories, $used_words);
+
+  if ($word) {
+    $word_id = $wordIndexes[$word];
+    $used_words[$word] = true;
+    return array($plot_id . '_' . $word_id, $used_words, $word);
+  }
+
+  return array($plot_step_id, $used_words, null);
 }
 
 function getPlot() {
@@ -180,4 +207,29 @@ function getPlot() {
   );
 }
 
+function suggestWord($step, $categories, $used_words) {
+  global $category2words;
 
+  if ($step > 0 && $step < 5) return null;
+
+  if ($step != -1 && mt_rand(0, 1) == 1) return null;
+
+  $result = array();
+
+  foreach ($categories as $category_id => $weight) {
+    foreach ($category2words[$category_id] as $word) {
+      if ($used_words[$word]) continue;
+      $result[$word] += $weight;
+    }
+  }
+
+  arsort($result);
+
+  $positive = array_filter($result, function ($v) {
+    return $v >= 0;
+  });
+
+  $shuffled = weightedShuffle($positive);
+
+  return $shuffled[5];
+}

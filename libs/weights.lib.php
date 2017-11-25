@@ -3,6 +3,9 @@
 function weightCategories($skills, $categories) {
   global $category2skill;
 
+  static $cache;
+  if ($cache) return $cache;
+
   $result = array();
   foreach ($category2skill as $category_id => $needed_skills) {
     $result[$category_id] = 0;
@@ -19,5 +22,6 @@ function weightCategories($skills, $categories) {
 
   arsort($result);
 
+  $cache = $result;
   return $result;
 }

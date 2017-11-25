@@ -6,32 +6,36 @@ function logic_dropSession($session_id) {
   $MC->delete('info' . $session_id);
 }
 
-function logic_getNextCards($session_id, $lang, $current_answer) {
+function logic_getNextCards($session_id, $lang, $current_answer, $step) {
   global $MC;
 
+  $plot = getPlot();
   $step_value = $MC->get('info' . $session_id);
 
+  $result = array();
   if (!$step_value) {
-    list($step, $step_info, $skills, $categories) = startPlot();
+    list($step, $step_info, $skills, $categories, $used_words) = startPlot();
+    $result[] = logic_wrapCard($step, $step_info, $lang);
   } else {
-    list($step, $skills, $categories) = $step_value;
-    list($step, $step_info, $skills, $categories) = moveByPlot($step, $current_answer, $skills, $categories);
+    list($skills, $categories, $used_words) = $step_value;
+    list($skills, $categories) = acceptDecision($step, $current_answer, $skills, $categories);
   }
 
-  $MC->set('info' . $session_id, array($step, $skills, $categories));
 
-  if ($step > 0) {
-    $result = array();
-    if ($step == 1) {
-      $result[] = logic_wrapCard($step, $step_info, $lang);
-    }
+  list($next_step, $used_words, $word) = findNextStep($step, $skills, $categories, $used_words);
 
-    $next_step = findNextStep($step, $skills);
-    if ($next_step > 0) {
-      $plot = getPlot();
-      $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
-    }
+  if ($word) {
+    $text = translate_query($lang, $word, 'fi');
+
+    return array(
+      'id'        => $next_step,
+      'text'      => $text,
+    );
+  } else {
+    $result[] = logic_wrapCard($next_step, $plot[$next_step], $lang);
   }
+
+  $MC->set('info' . $session_id, array($skills, $categories, $used_words));
 
   return array($result, $skills, $categories);
 }

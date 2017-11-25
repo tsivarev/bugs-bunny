@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config.php';
+require_once 'config_categories.php';
 require_once 'libs/global.lib.php';
 require_once 'libs/translate.lib.php';
 require_once 'libs/logic.lib.php';

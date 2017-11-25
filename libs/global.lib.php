@@ -79,6 +79,7 @@ function _db_loadJobs() {
   echo $count;
 }
 
+
 function _db_loadCategories() {
   require_once 'config_skills.php';
   global $category2skill;
@@ -111,4 +112,42 @@ function _db_loadCategories() {
     }
   }
 
+}
+
+function weightedShuffle($obj_2_weights, $smooth_alpha = 0.05) {
+  $sum_weight = 0;
+
+  foreach ($obj_2_weights as $obj => $weight) {
+    $sum_weight += $weight;
+  }
+
+  // add smoothing, so elements with too small weight also will be able to get on the first place
+  if (is_numeric($smooth_alpha)) {
+    $smooth_add = $smooth_alpha * $sum_weight / count($obj_2_weights);
+    $sum_weight = (1. + $smooth_alpha) * $sum_weight;
+  } else {
+    $smooth_add = 0.;
+  }
+
+  $result = array();
+  while (!empty($obj_2_weights)) {
+    $rand_val = mt_rand() / mt_getrandmax();
+    $rand_val *= $sum_weight;
+
+    $rand_obj = false;
+    $obj_weight = false;
+    foreach ($obj_2_weights as $obj => $weight) {
+      $rand_val -= $weight + $smooth_add;
+      $obj_weight = $weight;
+      $rand_obj = $obj;
+      if ($rand_val < 1.e-12) {
+        break;
+      }
+    }
+    $result[$rand_obj] = $obj_weight;
+    $sum_weight -= $obj_weight;
+    unset($obj_2_weights[$rand_obj]);
+  }
+
+  return $result;
 }
