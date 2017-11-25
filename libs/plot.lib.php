@@ -50,7 +50,7 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
       }
       if (isset($answer_info[PLOT_CATEGORY])) {
         foreach ($answer_info[PLOT_CATEGORY] as $category => $change) {
-          if (!isset($skills[$skill])) {
+          if (!isset($categories[$change])) {
             $categories[$category] = $change;
           } else {
             $categories[$category] += $change;
@@ -59,7 +59,15 @@ function acceptDecision($step, $answer, $skills, $categories, $courses) {
       }
       if ($answer == PLOT_NO) {
         if (isset($answer_info[PLOT_COURSES])) {
-          $courses[] = $answer_info[PLOT_COURSES];
+          $dont_add = false;
+          foreach ($courses as $cours) {
+            if ($cours[PLOT_NAME] === $answer_info[PLOT_COURSES][PLOT_NAME]) {
+              $dont_add = true;
+            }
+          }
+          if (!$dont_add) {
+            $courses[] = $answer_info[PLOT_COURSES];
+          }
         }
       }
     }
@@ -163,7 +171,7 @@ function getPlot() {
       PLOT_TEXT => 'Ymmärrän, mitä kirjoitetaan täällä',
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_LOW_SPEAKING => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_HIGH_SPEAKING => -2)),
-      PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses')
+      PLOT_COURSES => array(PLOT_LINK => 'https://www.hel.fi/sto/fi/opiskelu/maahanmuuttajat-immigrants/suomi-toisena-kielena-en', PLOT_NAME => 'Finnish language courses', 'emoji' => '🇫🇮')
     ),
     2 => array(
       PLOT_TEXT => 'Higher degree',
@@ -182,14 +190,14 @@ function getPlot() {
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_TECHNICAL => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.3, SKILL_INTELLIGENCE => -0.4)),
-      PLOT_COURSES => array(PLOT_LINK => 'http://www.eira.fi/fi/tule-opiskelemaan/enrol-to-high-school/', PLOT_NAME => 'Enrol High School')
+      PLOT_COURSES => array(PLOT_LINK => 'http://www.eira.fi/fi/tule-opiskelemaan/enrol-to-high-school/', PLOT_NAME => 'Enrol High School', 'emoji' => '👨‍🎓')
     ),
     5 => array(
       PLOT_TEXT => 'Computers',
       PLOT_TRANSLATE => true,
       PLOT_YES => array(PLOT_SKILLS => array(SKILL_COMPUTER => 1, SKILL_LOW => -0.2, SKILL_INTELLIGENCE => 0.3, SKILL_TECHNICAL => 0.1)),
       PLOT_NO => array(PLOT_SKILLS => array(SKILL_LOW => 0.2, SKILL_INTELLIGENCE => -0.1)),
-      PLOT_COURSES => array(PLOT_LINK => 'http://sto.digipap.eu/opinto-ohjelma/index.html#278', PLOT_NAME => 'ICT Courses')
+      PLOT_COURSES => array(PLOT_LINK => 'http://sto.digipap.eu/opinto-ohjelma/index.html#278', PLOT_NAME => 'ICT Courses', 'emoji' => '💻')
     ),
     6 => array(
       PLOT_TEXT => 'Animals',
