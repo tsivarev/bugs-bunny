@@ -223,13 +223,13 @@ function suggestWord($step, $categories, $used_words) {
   $result = array();
 
   foreach ($words as $word) {
-    if ($used_words[$word]) continue;
+    if (isset($used_words[$word])) continue;
     $result[$word] = 0;
   }
 
   foreach ($categories as $category_id => $weight) {
     foreach ($category2words[$category_id] as $word) {
-      if ($used_words[$word]) continue;
+      if (isset($used_words[$word])) continue;
       $result[$word] += $weight;
     }
   }

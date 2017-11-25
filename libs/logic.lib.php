@@ -28,7 +28,7 @@ function logic_getNextCards($session_id, $lang, $current_answer, $step) {
   if ($word) {
     $text = translate_query($lang, $word, 'fi');
 
-    return array(
+    $result[] = array(
       'id'        => $next_step,
       'text'      => $text,
     );

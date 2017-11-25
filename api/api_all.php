@@ -22,7 +22,7 @@ function api_cards_mark() {
   $card_id = (string)$input['card_id'];
   $answer = (bool)$input['answer'];
   list($cards, $skills, $categories) = logic_getNextCards($session_id, $lang, $answer ? PLOT_YES : PLOT_NO, $card_id);
-  $jobs = logic_getJobs($session_id, $lang, $skills, $categories);
+  $jobs = $categories ? logic_getJobs($session_id, $lang, $skills, $categories) : array();
 
   return array(
     'cards' => api_wrapList($cards, count($cards)),
