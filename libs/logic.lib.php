@@ -1,5 +1,33 @@
 <?php
 
+function logic_getNextCard($session_id, $lang, $current_answer) {
+  global $MC;
+
+  $step_value = $MC->get('info' . $session_id);
+
+  if (!$step_value) {
+    list($step, $step_info, $skills, $categories) = startPlot();
+  } else {
+    list($step, $skills, $categories) = $step_value;
+    list($step, $step_info, $skills, $categories) = moveByPlot($step, $current_answer, $skills, $categories);
+  }
+
+  $MC->set('info'.$session_id, array($step, $skills, $categories));
+
+  if ($step > 0) {
+    $text = $step_info[PLOT_TEXT];
+    if ($step_info[PLOT_TRANSLATE]) {
+      $text = translate_query($lang, $text);
+    }
+    return array(
+      'text' => $text,
+      'image_url' => '/static/card_' . $step . '.png'
+    );
+  }
+
+  return null;
+}
+
 function logic_getCards($session_id, $lang) {
   $items = array();
 
