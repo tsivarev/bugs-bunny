@@ -80,7 +80,7 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
       continue;
     }
 
-    $found = array_slice($job_category_ids[$category_id], 0, 3);
+    $found = array_slice($job_category_ids[$category_id], 0, 5);
     foreach ($found as $job_id) {
       $job_ids[$job_id] = $value;
     }
@@ -88,6 +88,7 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
 
   arsort($job_ids);
   $job_ids = weightedShuffle($job_ids);
+  $job_ids = array_slice($job_ids, 0, 200, true);
 
   log_msg(count($job_ids));
 
