@@ -56,6 +56,8 @@ function logic_wrapCard($step, $card, $lang) {
 }
 
 function logic_getJobs($session_id, $lang, $skills, $categories) {
+  global $MC;
+
   $weights = weightCategories($skills, $categories);
   $category_ids = array_filter($weights, function ($v) {
     return $v >= 0;
@@ -65,11 +67,15 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
 
   $result = db_query('SELECT * from JOBS_CATEGORIES where CATEGORY_ID IN ('.implode(',', array_keys($category_ids)).')');
 
+  $last_jobs = $MC->get('found_jobs') ?: array();
+
   $job_category_ids = array();
   while ($row = mysqli_fetch_assoc($result)) {
     if (!isset($job_category_ids[$row['category_id']])) {
       $job_category_ids[$row['category_id']] = array();
     }
+
+    if (isset($last_jobs[$row['job_id']])) continue;
 
     $job_category_ids[$row['category_id']][] = $row['job_id'];
   }
@@ -88,7 +94,7 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
 
   arsort($job_ids);
   $job_ids = weightedShuffle($job_ids);
-  $job_ids = array_slice($job_ids, 0, 200, true);
+  $job_ids = array_slice($job_ids, 0, 100, true);
 
   log_msg(count($job_ids));
 
@@ -151,7 +157,11 @@ function logic_getJobs($session_id, $lang, $skills, $categories) {
       'distance'  => $distance,
       'work_time' => translate_query($lang, $json['tyoaikatekstiYhdistetty'], 'fi'),
     );
+
+    $last_jobs[$json['ilmoitusnumero']] = true;
   }
+
+  $MC->set('found_jobs', $last_jobs, 90);
 
   $result = array();
   foreach ($job_ids as $job_id => $value) {
